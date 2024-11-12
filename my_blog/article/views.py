@@ -1,8 +1,14 @@
 import markdown
-from django.shortcuts import render
-
 # 导入数据模型ArticlePost
 from .models import ArticlePost
+# 引入redirect重定向模块
+from django.shortcuts import render, redirect
+# 引入HttpResponse
+from django.http import HttpResponse
+# 引入刚才定义的ArticlePostForm表单类
+from .forms import ArticlePostForm
+# 引入User模型
+from django.contrib.auth.models import User
 
 
 def article_list(request):
@@ -30,3 +36,22 @@ def article_detail(request, id):
     # 载入模板 并返回context对象
     return render(request, 'article/detail.html', context)
 
+
+def article_create(request):
+    # 判断用户是否提交数据
+    if request.method == 'POST':
+        article_post_form = ArticlePostForm(data=request.POST)
+        if article_post_form.is_valid():
+            new_article = article_post_form.save(commit=False)
+            new_article.author = User.objects.get(id=1)
+            new_article.save()
+            return redirect("article:article-list")
+        else:
+            return HttpResponse("表单内容有误，请重新填写")
+    else:
+        # 创建表单类实例
+        article_post_form = ArticlePostForm()
+        # 赋值上下文
+        context = {'article_post_form': article_post_form}
+        # 返回模板
+        return render(request, 'article/create.html', context)
