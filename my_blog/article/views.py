@@ -71,3 +71,22 @@ def article_safe_delete(request, id):
         return redirect("article:article-list")
     else:
         return HttpResponse("仅允许post请求")
+
+
+# 更新文章
+def article_update(request, id):
+    article = ArticlePost.objects.get(id=id)
+    if request.method == "POST":
+        article_post_form = ArticlePostForm(data=request.POST)
+        if article_post_form.is_valid():
+            article.body = request.POST['body']
+            article.title = request.POST['title']
+            article.save()
+            return redirect("article:article-detail", id=id)
+        else:
+            return HttpResponse("表单内容有误，请重新填写")
+
+    else:
+        article_post_form = ArticlePostForm()
+        context = {'article_post_form': article_post_form, 'article': article}
+        return render(request, 'article/update.html', context)
