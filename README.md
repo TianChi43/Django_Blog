@@ -7,7 +7,9 @@
 * 使用bootstrap4编写模板文件
 * 采用前后端不分离的方式
 * 使用layer组件实现弹窗
+* 添加了防csrf攻击的相关代码
 * 完成文章的增删（11.12）
+* 完成文章的改查（11.13）
 
 <br>
 
@@ -17,4 +19,5 @@
 
 
 学习自杜塞老师的相关文章
-https://juejin.cn/user/1591748567503079/posts
+https://juejin.cn/user/1591748567503079/posts<br>
+看到了一篇较好的博客入门合集也是用django写的https://www.zmrenwu.com/tutorials/hellodjango-blog-tutorial/
