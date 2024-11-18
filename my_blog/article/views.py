@@ -43,7 +43,8 @@ def article_create(request):
         article_post_form = ArticlePostForm(data=request.POST)
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
-            new_article.author = User.objects.get(id=1)
+            # 指定目前登录的用户作为作者
+            new_article.author = User.objects.get(id=request.user.id)
             new_article.save()
             return redirect("article:article-list")
         else:
@@ -65,7 +66,10 @@ def article_delete(request, id):
 
 # 安全删除文章
 def article_safe_delete(request, id):
+    article = ArticlePost.objects.get(id=id)
     if request.method == 'POST':
+        if request.user != article.author:
+            return HttpResponse("你没有权限删除这篇博客。")
         article = ArticlePost.objects.get(id=id)
         article.delete()
         return redirect("article:article-list")
@@ -77,6 +81,8 @@ def article_safe_delete(request, id):
 def article_update(request, id):
     article = ArticlePost.objects.get(id=id)
     if request.method == "POST":
+        if request.user != article.author:
+            return HttpResponse("你没有权限修改这篇博客。")
         article_post_form = ArticlePostForm(data=request.POST)
         if article_post_form.is_valid():
             article.body = request.POST['body']
