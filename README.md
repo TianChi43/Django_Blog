@@ -1,4 +1,4 @@
-# 做一个个人博客
+# Django个人博客
 **项目采用python3.7+django3.2+mysql编写**
 
 
