@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'userprofile',
+    'password_reset',
 ]
 
 MIDDLEWARE = [
@@ -104,3 +105,16 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+EMAIL_HOST = 'smtp.qq.com'
+# 替换为你的QQ邮箱地址
+EMAIL_HOST_USER = '2519947303@qq.com'
+# 替换为你从QQ邮箱设置中获取的授权码
+EMAIL_HOST_PASSWORD = 'sjmzquycqtradjji'
+# 使用TLS时，通常使用端口587
+EMAIL_PORT = 587
+# 是否使用 TLS
+EMAIL_USE_TLS = True
+# 默认的发件人，可以是你的QQ邮箱地址加上你想要的显示名称
+DEFAULT_FROM_EMAIL = 'Tian <2519947303@qq.com>'
+
